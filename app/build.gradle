@@ -1,0 +1,69 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+//apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release' // must be applied after your artifact generating plugin (eg. java / com.android.library)
+
+
+publish {
+
+    def groupProjectID = 'com.mahmoud.architecturerecyclerview'
+    def artifactProjectID = "Architecture Recycler View"
+    def publishVersionID = '0.1.0'
+
+    userOrg = 'Mahmoud Abdelaal'
+    repoName = 'ArchitectureListView'
+    groupId = groupProjectID
+    artifactId = artifactProjectID
+    publishVersion = publishVersionID
+    desc = 'Architecture List View Easy Implementation of Recycler with solid Architecture it\'s module build using Android Architecture components -----Features------- 1- Reactive 2- Pagination 3- RefreshLayout 4- DataBinding 5- filter 6- change the Behavior on the fly'
+    website = ''
+
+}
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.mahmoud.architecturerecyclerview"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    dataBinding {
+        enabled = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    def listLibrary = rootProject.ext.listLibrary
+    def testcore = rootProject.ext.testcore
+    listLibrary.each{ k, v -> implementation v }
+    testcore.each{ k, v -> implementation v }
+    implementation project(path: ':listLibrary')
+}
